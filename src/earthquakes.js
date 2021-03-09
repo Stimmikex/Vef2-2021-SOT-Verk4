@@ -1,5 +1,10 @@
 import fetch from 'node-fetch';
-
+/**
+ * Gets the Earthquakes from the proxy server.
+ * @param {*} type
+ * @param {*} period
+ * @returns data
+ */
 export async function fetchEarthquakes(type, period) {
   // TODO sækja gögn frá proxy þjónustu
   let result;

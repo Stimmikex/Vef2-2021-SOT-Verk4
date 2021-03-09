@@ -19,6 +19,7 @@ router.get('/proxy', async (req, res) => {
   try {
     result = await getEarthquakes(`${period}_${type}`);
     // result = await fetchEarthquakes(period, type);
+    // eslint-disable-next-line no-console
     console.log(result);
   } catch (e) {
     console.error('error getting from cache', e);
@@ -38,6 +39,7 @@ router.get('/proxy', async (req, res) => {
 
   try {
     result = await fetch(URL);
+    // eslint-disable-next-line no-console
     console.log(result);
   } catch (e) {
     console.error('Villa við að sækja gögn frá vefþjónustu', e);
