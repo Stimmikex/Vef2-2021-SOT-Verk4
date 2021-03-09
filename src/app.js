@@ -16,9 +16,27 @@ const app = express();
 const path = dirname(fileURLToPath(import.meta.url));
 
 app.use(express.static(join(path, '../public')));
+app.use(express.static(join(path, '../node_modules/leaflet/dist')));
+app.set('view engine', 'ejs');
+app.set('views', join(path, '../view'));
 
-// TODO setja upp proxy þjónustu
-// TODO birta index.html skjal
+app.use((req, res, next) => {
+  res.header(
+    'Access-Control-Allow-Origin', '*',
+  );
+  res.header(
+    'Access-Control-Allow-Methods', 'GET',
+  );
+  next();
+});
+
+app.get('/', (req, res) => {
+  res.sendFile('index.html', {
+    root: join(path, '..'),
+  });
+});
+
+app.use(proxyRouter);
 
 /**
  * Middleware sem sér um 404 villur.
@@ -47,7 +65,7 @@ function errorHandler(err, req, res, next) {
   const title = 'Villa kom upp';
   res.status(500).render('error', { title });
 }
-app.use('/', proxyRouter);
+
 app.use(notFoundHandler);
 app.use(errorHandler);
 

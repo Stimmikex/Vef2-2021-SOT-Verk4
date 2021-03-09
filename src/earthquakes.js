@@ -1,7 +1,10 @@
+import fetch from 'node-fetch';
+
 export async function fetchEarthquakes(type, period) {
   // TODO sækja gögn frá proxy þjónustu
   let result;
   try {
+    // eslint-disable-next-line no-undef
     result = await fetch(`http://localhost:3001/proxy?period=${period}&type=${type}`);
   } catch (e) {
     console.error('Villa við að sækja', e);
@@ -14,5 +17,6 @@ export async function fetchEarthquakes(type, period) {
   }
 
   const data = await result.json();
+
   return data;
 }

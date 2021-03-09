@@ -9,7 +9,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Hreinsa header og upplýsingar þegar ný gögn eru sótt
   // Sterkur leikur að refactora úr virkni fyrir event handler í sér fall
 
-  const earthquakes = await fetchEarthquakes();
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const type = urlParams.has('type') ? urlParams.get('type') : 'all';
+  const period = urlParams.has('period') ? urlParams.get('period') : 'hour';
+
+  const earthquakes = await fetchEarthquakes(period, type);
 
   // Fjarlægjum loading skilaboð eftir að við höfum sótt gögn
   const loading = document.querySelector('.loading');
@@ -27,7 +32,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   init(map);
 
-  earthquakes.forEach((quake) => {
+  console.log(earthquakes);
+  earthquakes.data.features.forEach((quake) => {
     const {
       title, mag, time, url,
     } = quake.properties;
