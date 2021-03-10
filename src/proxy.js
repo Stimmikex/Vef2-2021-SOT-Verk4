@@ -1,6 +1,7 @@
 // TODO útfæra proxy virkni
 import express from 'express';
 import fetch from 'node-fetch';
+import { timerStart, timerEnd } from './time.js';
 
 import { getEarthquakes, setEarthquakes } from './cache.js';
 
@@ -14,19 +15,9 @@ router.get('/proxy', async (req, res) => {
 
   let result;
 
-<<<<<<< Updated upstream
-  // // TODO skoða fyrst cachið
-  // try {
-  //   result = await getEarthquakes(`${period}_${type}`);
-  //   // result = await fetchEarthquakes(period, type);
-  //   // eslint-disable-next-line no-console
-  //   console.log(result);
-  // } catch (e) {
-  //   console.error('error getting from cache', e);
-  // }
-=======
   // TODO skoða fyrst cachið
   try {
+    timerStart();
     result = await getEarthquakes(`${period}_${type}`);
     // result = await fetchEarthquakes(period, type);
     // eslint-disable-next-line no-console
@@ -34,12 +25,12 @@ router.get('/proxy', async (req, res) => {
   } catch (e) {
     console.error('error getting from cache', e);
   }
->>>>>>> Stashed changes
 
   if (result) {
     const dataman = {
       data: JSON.parse(result),
       header: { period, type },
+      timer: { text: 'cached', time: timerEnd() },
       info: {
         cached: true,
         time: 0.500,
@@ -50,6 +41,7 @@ router.get('/proxy', async (req, res) => {
   }
 
   try {
+    timerStart();
     result = await fetch(URL);
     const resultText = await result.text();
     // eslint-disable-next-line no-console
@@ -70,19 +62,14 @@ router.get('/proxy', async (req, res) => {
     return;
   }
 
-<<<<<<< Updated upstream
-  // // TODO setja gögn í cache
-  // const resultText = await result.text();
-  // await setEarthquakes(`${period}_${type}`, resultText);
-=======
   // TODO setja gögn í cache
   const resultText = await result.text();
   await setEarthquakes(`${period}_${type}`, resultText);
->>>>>>> Stashed changes
 
   const data = {
     data: JSON.parse(resultText),
     header: { period, type },
+    timer: { text: 'not cached', time: timerEnd() },
     info: {
       cached: false,
       time: 0.500,

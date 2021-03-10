@@ -105,3 +105,8 @@ export function earthheader(time, mag) {
   }
   return { period: emag, type: etime };
 }
+
+export function millisToMinutesAndSeconds(millis) {
+  const seconds = ((millis % 60000) / 1000).toFixed(0);
+  return `0.${seconds}`;
+}
