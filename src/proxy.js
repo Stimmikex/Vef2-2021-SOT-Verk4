@@ -2,7 +2,7 @@
 import express from 'express';
 import fetch from 'node-fetch';
 
-import { getEarthquakes, setEarthquakes } from './cache.js';
+// import { getEarthquakes, setEarthquakes } from './cache.js';
 // import { fetchEarthquakes } from './earthquakes.js';
 
 export const router = express.Router();
