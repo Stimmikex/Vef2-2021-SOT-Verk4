@@ -45,8 +45,7 @@ router.get('/proxy', async (req, res) => {
     const data = {
       data: JSON.parse(resultText),
     };
-    res.json(data);
-    return;
+    res.send(data);
   } catch (e) {
     console.error('Villa við að sækja gögn frá vefþjónustu', e);
     res.status(500).send('Villa við að sækja gögn frá vefþónustu');
