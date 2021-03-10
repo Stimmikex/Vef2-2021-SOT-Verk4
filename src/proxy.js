@@ -41,11 +41,11 @@ router.get('/proxy', async (req, res) => {
     result = await fetch(URL);
     const resultText = await result.text();
     // eslint-disable-next-line no-console
-    console.log(resultText);
+    // console.log(resultText);
     const data = {
       data: JSON.parse(resultText),
     };
-    res.send(data);
+    res.json(data);
   } catch (e) {
     console.error('Villa við að sækja gögn frá vefþjónustu', e);
     res.status(500).send('Villa við að sækja gögn frá vefþónustu');
