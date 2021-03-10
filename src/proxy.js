@@ -40,20 +40,39 @@ router.get('/proxy', async (req, res) => {
   try {
     result = await fetch(URL);
     const resultText = await result.text();
-
+    // eslint-disable-next-line no-console
+    console.log(resultText);
     const data = {
       data: JSON.parse(resultText),
+      info: {
+        cached: false,
+        time: 0.500,
+      },
     };
     res.json(data);
+    return;
   } catch (e) {
     console.error('Villa við að sækja gögn frá vefþjónustu', e);
     res.status(500).send('Villa við að sækja gögn frá vefþónustu');
+    return;
   }
 
   if (!result.ok) {
     console.error('Villa frá vefþjónustu', await result.text());
     res.status(500).send('Villa við að sækja gögn frá vefþjónustu');
+    return;
   }
 
-  // TODO setja gögn í cache
+  // // TODO setja gögn í cache
+  // const resultText = await result.text();
+  // await setEarthquakes(`${period}_${type}`, resultText);
+
+  // const data = {
+  //   data: JSON.parse(resultText),
+  //   info: {
+  //     cached: false,
+  //     time: 0.500,
+  //   },
+  // };
+  // res.json(data);
 });
