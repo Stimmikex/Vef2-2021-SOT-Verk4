@@ -74,3 +74,34 @@ export function formatDate(timestamp) {
   // Útfæra með „vanilla JS“ eða nota date-fns pakka
   return format(new Date(timestamp), 'dd.MM.yyyy HH:mm:ss');
 }
+
+export function earthheader(time, mag) {
+  let emag = '';
+  if (mag === 'all') {
+    emag = 'Allir';
+  } else if (mag === '1.0') {
+    emag = '1.0';
+  } else if (mag === '2.5') {
+    emag = '2.5';
+  } else if (mag === '4.5') {
+    emag = '4.5';
+  } else if (mag === 'significant') {
+    emag = 'significant';
+  } else {
+    emag = 'Nothing';
+  }
+
+  let etime = '';
+  if (time === 'hour') {
+    etime = 'klukkutíma';
+  } else if (time === 'day') {
+    etime = 'dag';
+  } else if (time === 'week') {
+    etime = 'wiku';
+  } else if (time === 'month') {
+    etime = 'mánuð';
+  } else {
+    etime = 'Nothing';
+  }
+  return { period: emag, type: etime };
+}

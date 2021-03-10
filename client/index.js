@@ -1,5 +1,10 @@
 import { fetchEarthquakes } from './lib/earthquakes';
-import { el, element, formatDate } from './lib/utils';
+import {
+  el,
+  element,
+  formatDate,
+  earthheader,
+} from './lib/utils';
 import { init, createPopup } from './lib/map';
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -27,12 +32,23 @@ document.addEventListener('DOMContentLoaded', async () => {
     );
   }
 
+  const header = document.querySelector('.earthquakes_header');
   const ul = document.querySelector('.earthquakes');
   const map = document.querySelector('.map');
 
   init(map);
 
-  console.log(earthquakes);
+  const eheader = earthheader(earthquakes.header.type, earthquakes.header.period);
+
+  const div = el('div');
+
+  div.appendChild(
+    el('h1', `${eheader.period} Jarðskjálftar, seinasta ${eheader.type}`),
+  );
+
+  header.appendChild(div);
+
+  // console.log(earthquakes);
   earthquakes.data.features.forEach((quake) => {
     const {
       title, mag, time, url,

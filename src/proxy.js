@@ -2,8 +2,7 @@
 import express from 'express';
 import fetch from 'node-fetch';
 
-// import { getEarthquakes, setEarthquakes } from './cache.js';
-// import { fetchEarthquakes } from './earthquakes.js';
+import { getEarthquakes, setEarthquakes } from './cache.js';
 
 export const router = express.Router();
 
@@ -15,6 +14,7 @@ router.get('/proxy', async (req, res) => {
 
   let result;
 
+<<<<<<< Updated upstream
   // // TODO skoða fyrst cachið
   // try {
   //   result = await getEarthquakes(`${period}_${type}`);
@@ -24,18 +24,30 @@ router.get('/proxy', async (req, res) => {
   // } catch (e) {
   //   console.error('error getting from cache', e);
   // }
+=======
+  // TODO skoða fyrst cachið
+  try {
+    result = await getEarthquakes(`${period}_${type}`);
+    // result = await fetchEarthquakes(period, type);
+    // eslint-disable-next-line no-console
+    // console.log(result);
+  } catch (e) {
+    console.error('error getting from cache', e);
+  }
+>>>>>>> Stashed changes
 
-  // if (result) {
-  //   const dataman = {
-  //     data: JSON.parse(result),
-  //     info: {
-  //       cached: true,
-  //       time: 0.500,
-  //     },
-  //   };
-  //   res.json(dataman);
-  //   return;
-  // }
+  if (result) {
+    const dataman = {
+      data: JSON.parse(result),
+      header: { period, type },
+      info: {
+        cached: true,
+        time: 0.500,
+      },
+    };
+    res.json(dataman);
+    return;
+  }
 
   try {
     result = await fetch(URL);
@@ -58,16 +70,23 @@ router.get('/proxy', async (req, res) => {
     return;
   }
 
+<<<<<<< Updated upstream
   // // TODO setja gögn í cache
   // const resultText = await result.text();
   // await setEarthquakes(`${period}_${type}`, resultText);
+=======
+  // TODO setja gögn í cache
+  const resultText = await result.text();
+  await setEarthquakes(`${period}_${type}`, resultText);
+>>>>>>> Stashed changes
 
-  // const data = {
-  //   data: JSON.parse(resultText),
-  //   info: {
-  //     cached: false,
-  //     time: 0.500,
-  //   },
-  // };
-  // res.json(data);
+  const data = {
+    data: JSON.parse(resultText),
+    header: { period, type },
+    info: {
+      cached: false,
+      time: 0.500,
+    },
+  };
+  res.json(data);
 });
