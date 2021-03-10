@@ -44,10 +44,6 @@ router.get('/proxy', async (req, res) => {
     console.log(resultText);
     const data = {
       data: JSON.parse(resultText),
-      info: {
-        cached: false,
-        time: 0.500,
-      },
     };
     res.json(data);
     return;
