@@ -2,7 +2,7 @@
 import express from 'express';
 import fetch from 'node-fetch';
 
-// import { getEarthquakes, setEarthquakes } from './cache.js';
+import { getEarthquakes, setEarthquakes } from './cache.js';
 // import { fetchEarthquakes } from './earthquakes.js';
 
 export const router = express.Router();
@@ -15,12 +15,12 @@ router.get('/proxy', async (req, res) => {
 
   let result;
 
-  // TODO skoða fyrst cachið
+  // // TODO skoða fyrst cachið
   // try {
   //   result = await getEarthquakes(`${period}_${type}`);
   //   // result = await fetchEarthquakes(period, type);
   //   // eslint-disable-next-line no-console
-  //   // console.log(result);
+  //   console.log(result);
   // } catch (e) {
   //   console.error('error getting from cache', e);
   // }
@@ -39,8 +39,12 @@ router.get('/proxy', async (req, res) => {
 
   try {
     result = await fetch(URL);
-    // eslint-disable-next-line no-console
-    // console.log(result);
+    const resultText = await result.text();
+
+    const data = {
+      data: JSON.parse(resultText),
+    };
+    res.json(data);
   } catch (e) {
     console.error('Villa við að sækja gögn frá vefþjónustu', e);
     res.status(500).send('Villa við að sækja gögn frá vefþónustu');
@@ -52,15 +56,4 @@ router.get('/proxy', async (req, res) => {
   }
 
   // TODO setja gögn í cache
-  // const resultText = await result.text();
-  // await setEarthquakes(`${period}_${type}`, resultText);
-
-  // const data = {
-  //   data: JSON.parse(resultText),
-  //   info: {
-  //     cached: false,
-  //     time: 0.500,
-  //   },
-  // };
-  // res.json(data);
 });
