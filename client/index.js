@@ -4,7 +4,6 @@ import {
   element,
   formatDate,
   earthheader,
-  millisToMinutesAndSeconds,
 } from './lib/utils';
 import { init, createPopup } from './lib/map';
 
