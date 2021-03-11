@@ -41,12 +41,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const eheader = earthheader(earthquakes.header.type, earthquakes.header.period);
 
-  console.log(earthquakes.timer.time);
-
   const div = el('div');
 
   div.appendChild(el('h1', `${eheader.period} Jarðskjálftar, seinasta ${eheader.type}`));
-  div.appendChild(el('h2', `Gögn eru: ${earthquakes.timer.text}, Fyrir spurn tók: ${millisToMinutesAndSeconds(earthquakes.timer.time)}`));
+  div.appendChild(el('h2', `Gögn eru: ${earthquakes.timer.text}, Fyrir spurn tók: ${earthquakes.timer.time}`));
 
   header.appendChild(div);
 
