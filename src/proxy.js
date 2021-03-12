@@ -14,7 +14,7 @@ router.get('/proxy', async (req, res) => {
   const URL = `https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/${period}_${type}.geojson`;
 
   let result;
-  let timer = timerStart();
+  const timer = timerStart();
 
   // TODO skoða fyrst cachið
   try {
@@ -41,7 +41,6 @@ router.get('/proxy', async (req, res) => {
   }
 
   try {
-    timer = timerStart();
     result = await fetch(URL);
   } catch (e) {
     console.error('Villa við að sækja gögn frá vefþjónustu', e);
